@@ -1,4 +1,6 @@
 ﻿@page "/"
+@using TourUI.Model;
+@using TourUI.Messaging;
 @rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
@@ -45,8 +47,11 @@ Tours
 
     private void processMessage()
     {
-        
+        TourMessage message = new(name, email, selectedValue, radioValue);
+        TourMessageHandler messageHandler = new();
+        messageHandler.SendMessage(message);
     }
+
 }
 
 
