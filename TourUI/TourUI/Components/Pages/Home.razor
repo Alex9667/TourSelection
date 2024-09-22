@@ -17,7 +17,7 @@ Email
 Tours
 <br />
 <select @onchange="OnSelectionChange">
-    <option value="">Blank</option>
+    <option value="Blank">Blank</option>
     <option value="Kolding">Kolding</option>
     <option value="Middelfart">Middelfart</option>
     <option value="Odense">Odense</option>
@@ -26,7 +26,7 @@ Tours
 <input @onchange="OnRadioChange" type="radio" value="Book" name="SelectedOption" /> Book
 <input @onchange="OnRadioChange" type="radio" value="Cancel" name="SelectedOption" />Cancel
 <br />
-<input type="button" @onclick="processMessage"/>
+<input type="button" @onclick="processMessage" value="Submit"/>
 
 
 @code {
