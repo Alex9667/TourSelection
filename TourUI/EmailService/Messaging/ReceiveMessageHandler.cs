@@ -19,12 +19,11 @@ namespace EmailService.Messaging
 
             channel.ExchangeDeclare(exchange: "Book", type: ExchangeType.Topic, durable: true);
 
-            var queueName = "Book";
+            var queueName = "EmailServiceQueue";
 
             channel.QueueDeclare(queue: queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
-            channel.QueueBind(queue: queueName, exchange: "Book", routingKey: "Book");
+            channel.QueueBind(queue: queueName, exchange: "Book", routingKey: "tour.book");
 
-            channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
             Console.WriteLine("Waiting for messages");
 
             var consumer = new EventingBasicConsumer(channel);
@@ -35,7 +34,7 @@ namespace EmailService.Messaging
                 Console.WriteLine($"Received: {message}");
 
             };
-            channel.BasicConsume(queue: "Book",
+            channel.BasicConsume(queue: queueName,
                                  autoAck: true,
                                  consumer: consumer);
             Console.ReadKey();

@@ -10,7 +10,7 @@ namespace TourUI.Messaging
         {
             var factory = new ConnectionFactory { HostName = "localhost" };
 
-            string type = tourMessage.Type;
+            string type = tourMessage.Type.ToLower();
 
             if(tourMessage.Location == "Blank")
             {
@@ -20,13 +20,13 @@ namespace TourUI.Messaging
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
 
-            channel.ExchangeDeclare(exchange: type, type: ExchangeType.Topic, durable: true);
+            channel.ExchangeDeclare(exchange: "Book", type: ExchangeType.Topic, durable: true);
 
-            var routingKey = type;
-            var message = tourMessage.Name + "," + tourMessage.Email + "," + tourMessage.Location + "," + tourMessage.Type; 
+            var routingKey = $"tour.{type}";
+            var message = $"{tourMessage.Name},{tourMessage.Email},{tourMessage.Location},{tourMessage.Type}";
             var body = Encoding.UTF8.GetBytes(message);
 
-            channel.BasicPublish(exchange: type,
+            channel.BasicPublish(exchange: "Book",
                                  routingKey: routingKey,
                                  basicProperties: null,
                                  body: body);
